@@ -8,11 +8,7 @@
 			</div>
 			<div class="col-xs-4"></div>
 		</div>
-		<div class="row pull-right">
-			<div class="col-xs-12">
-				<button class="btn btn-danger" v-on:click="tile_count += 1">Add Items</button>
-			</div>
-		</div>
+		
 		<br/>
 		<form method="post" action="<?=site_url('billing/save')?>">
 			  <div class="row">
@@ -43,37 +39,42 @@
 				<div class="row">
 					<div class="col-xs-4"></div>
 					<div class="col-xs-4">Price (per box)</div>
-					<div class="col-xs-4">Stock (in Boxes)</div>
 					<div class="col-xs-4"></div>
 				</div> 
-				<div class="row"  v-for="n in tile_count" v-model="tile_count">
+				<div class="row"  v-for="n in items_count" v-model="items_count">
 					<div class="col-xs-4">
+						<!-- //Testing -->
 						<div class="form-group">
-							<select class="form-control chosen-select" v-bind:name="'tile['+n+'][tile_id]'" >
-							   <option selected disabled>-Select Items-</option>
-								<option  v-bind:value="tile.id" v-for='tile in tiles'>{{tile.name}}</option>
-							</select>
+							<input type="text" list="items" class="form-control" v-bind:name="'item['+n+'][item_name]'" autocomplete="off"/>
+								<datalist id="items">
+								  <?php foreach ($items as $key => $item): ?>
+								  	<option><?=$item->name?></option>
+								  <?php endforeach; ?>
+								</datalist>
 						</div>
+						<!-- //Testing -->
 					</div>
 					<div class="col-xs-4">
 						<div class="form-group">
-							<input class="form-control" type="number" v-bind:name="'tile['+n+'][price]'" placeholder="Enter Price"/>
+							<input class="form-control" type="number" v-bind:name="'item['+n+'][price]'" placeholder="Enter Price"/>
 						</div>
 					</div>
-					<div class="col-xs-4">
-						<div class="form-group">
-							<input class="form-control" type="number" v-bind:name="'tile['+n+'][stock]'" placeholder="Enter Stock"/>
-						</div>
-					</div>
-					<div class="col-xs-4"></div>
+					
+				
 				</div> <!-- row -->
 				<div class="row">
-				<div class="col-xs-4"></div>
-				<div class="col-xs-4"></div>
-				<div class="col-xs-4">
-						<input type="submit" id="pre_booking" class="btn btn-success no-print" name="pre_booking" value="Pre Booking" />
-						<input type="submit" id="print_bill" class="btn btn-success no-print" name="print_bill" value="Save And Print Bill" />
+					<div class="col-md-4"></div>
+					<div class="col-md-4"></div>
+					<div class="col-md-4 pull-right">
+							<button class="btn btn-danger" type="button" v-on:click="items_count += 1">Add Items</button>
 					</div>
+				</div>
+			
+				<div class="row">
+			
+					<div class="col-md-4">
+							<input type="submit" id="print_bill" class="btn btn-success no-print" name="print_bill" value="Save And Print Bill" />
+						</div>
 				</div>
 				
 		</form>

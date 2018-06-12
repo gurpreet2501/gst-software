@@ -3,7 +3,7 @@ jQuery(function($){
   window.BILLING_FORM = new Vue({
   el: '#billing_form',
   data: {
-   tile_count:6,
+   items_count:1,
    gst_rates:[1,2]
   },
   computed: {

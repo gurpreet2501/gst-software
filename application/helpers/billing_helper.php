@@ -1,41 +1,45 @@
 <?php 
 
-function get_tile_name($id){
+function get_item_id($name){
     
- $tile = Models\SmsTiles::select('name')->where('id', $id)->first();
+ $item = Models\SmsItems::select('id')->where('name', trim($name))->first();
 
- return $tile->name;
+ return $item->id;
  
 }
 
 
 function getBillTotal($data, $tax_rates, $extra_charges){
+   
+    if(empty($extra_charges))
+        $extra_charges = 0;
+
+    if(empty($tax_rates))
+        $tax_rates = [];
 	
-	$total = 0;
-	
-	foreach ($data as $key => $val) 
-		$total = $total + $val['stock'] * $val['price'];
- 
+
+    $total = 0;
+    
+    foreach ($data as $key => $val){
+        if(!$val['price'])
+            continue;
+        $total = $total + $val['price'];
+    }
+  
     $rate_total = 0;
 
-	foreach ($tax_rates as $key => $tax_id) {
-		$rate_record = Models\Gst::where('id', $tax_id)->where('is_fright_gst',0)->first();	
-        if(!$rate_record)
-            continue;
+        foreach ($tax_rates as $key => $tax_id) {
+            $rate_record = Models\Gst::where('id', $tax_id)->first();    
+            if(!$rate_record)
+                continue;
+           
+            $rate = ($rate_record->rate_percent * $total)/100.0;
+            
+            $rate_total = $rate_total + $rate;      
 
-		$rate = ($rate_record->rate_percent * $total)/100.0;
-		
-		$rate_total = $rate_total + $rate;		
-	}
-
-    $frieght_gst = 0;
-    $fright_tax = Models\Gst::where('id', $tax_id)->where('is_fright_gst',1)->first(); 
-    if(!empty($fright_tax))
-    {
-        $frieght_gst = ($extra_charges * $fright_tax->rate_percent)/100.00;
-    }
-
-	return ($total + $rate_total + $extra_charges + $frieght_gst);
+        }
+    
+	return ($total + $rate_total + $extra_charges);
 }
 
 function reduce_tile_stock($tile){
