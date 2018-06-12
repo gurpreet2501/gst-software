@@ -14,7 +14,7 @@ class Billing extends CI_Controller
 
 		$tax_rates = Models\Gst::get();
 		
-		$tiles = Models\SmsTiles::with('category')->get();
+		$tiles = Models\SmsItems::with('category')->get();
 		
 		$this->load->view('billing/create',[
 				'tax_rates' => $tax_rates,
@@ -75,9 +75,12 @@ class Billing extends CI_Controller
 		if(isset($data['pre_booking']))
 			$is_booking = 1;
 
+		
 		//Freight Charges included in bill amount
 		$total = getBillTotal($data['tile'], $data['gst_rates'], $data['freight_charges']);
-
+		echo "<pre>";
+		print_r($total);
+		exit;
 		$bill = Models\SmsBill::create([
 			'party_name' => $data['party_name'] ? $data['party_name'] : 'Name Not Mentioned',
 			'bill_total' => $total,

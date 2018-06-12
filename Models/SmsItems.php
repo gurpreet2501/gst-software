@@ -2,10 +2,10 @@
 namespace Models;
 use Illuminate\Database\Eloquent\Model;
 
-class SmsTiles extends Model
+class SmsItems extends Model
 {
-	protected $table    = 'sms_tiles';
-	protected $fillable = ['name','stock','separate_tiles_stock','category_id','separate_tiles_stock'];
+	protected $table    = 'sms_items';
+	protected $fillable = ['name','stock','category_id','weight'];
 
 	public function category()
 	{

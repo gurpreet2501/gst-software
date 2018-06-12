@@ -3,14 +3,14 @@
 		<div class="row">
 			<div class="col-xs-4"></div>
 			<div class="col-xs-4">
-				<h3 class="text-center">Tile Zone Patiala</h3>
-				<h5 class="text-center">Deals in all types of tile variety</h5>
+				<h3 class="text-center">Company Name</h3>
+				<h5 class="text-center">Your Slogan Here</h5>
 			</div>
 			<div class="col-xs-4"></div>
 		</div>
 		<div class="row pull-right">
 			<div class="col-xs-12">
-				<button class="btn btn-danger" v-on:click="tile_count += 1">Add Tiles</button>
+				<button class="btn btn-danger" v-on:click="tile_count += 1">Add Items</button>
 			</div>
 		</div>
 		<br/>
@@ -50,7 +50,7 @@
 					<div class="col-xs-4">
 						<div class="form-group">
 							<select class="form-control chosen-select" v-bind:name="'tile['+n+'][tile_id]'" >
-							   <option selected disabled>-Select Tiles-</option>
+							   <option selected disabled>-Select Items-</option>
 								<option  v-bind:value="tile.id" v-for='tile in tiles'>{{tile.name}}</option>
 							</select>
 						</div>

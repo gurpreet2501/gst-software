@@ -22,15 +22,15 @@ class Data extends CI_Controller {
 		$this->_example_output((object)array('output' => '' , 'js_files' => array() , 'css_files' => array()));
 	}
 
-	public function addTiles()
+	public function add_items()
 	{
 			$crud = new grocery_CRUD();
 			$crud->set_theme('datatables');
-			$crud->set_table('sms_tiles');
+			$crud->set_table('sms_items');
 			$crud->set_relation('category_id','sms_category','name');
 			$crud->display_as('stock','Stock (Total Boxes)');
 			$crud->add_action('Update Stock', '', '','ui-icon-image',array($this,'stockMgnt'));
-			$crud->columns('name','price_per_box','stock','separate_tiles_stock','category_id','tile_pic');
+			$crud->columns('name','price_per_box','category_id','pic','weight');
 			$crud->display_as('category_id','category');
 			$crud->display_as('weight_in_kg','Box Weight In Kg (Optional)');
 			$crud->field_type('created_at','hidden',date('Y-m-d H:i:s'));
